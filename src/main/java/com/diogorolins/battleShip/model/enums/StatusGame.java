@@ -1,7 +1,7 @@
 package com.diogorolins.battleShip.model.enums;
 
 public enum StatusGame {
-	CRIADO(1), INICIADO(2), PAUSA(3), FINALIZADO(4);
+	CREATED(1), BEGAN(2), PAUSE(3), FINISHED(4);
 
 	private final int status;
 

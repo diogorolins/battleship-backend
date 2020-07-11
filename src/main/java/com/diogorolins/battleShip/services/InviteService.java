@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.diogorolins.battleShip.exception.ObjectNotFoundException;
+import com.diogorolins.battleShip.model.Game;
 import com.diogorolins.battleShip.model.Invite;
 import com.diogorolins.battleShip.model.Player;
 import com.diogorolins.battleShip.model.enums.StatusInvite;
@@ -17,6 +18,9 @@ public class InviteService {
 
 	@Autowired
 	private InviteRepository repository;
+	
+	@Autowired
+	private GameService gameService;
 	
 	public Invite insert(Invite invite) {
 		return repository.save(invite);
@@ -40,7 +44,9 @@ public class InviteService {
 
 	public Invite acceptInvite(Integer id) {
 		Invite invite = findById(id);
+		Game game = gameService.createNewGame(invite.getFrom(), invite.getTo());
 		invite.setStatus(StatusInvite.ACCEPTED);
+		invite.setGame(game);
 		repository.save(invite);
 		return invite;
 	}

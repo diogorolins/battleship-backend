@@ -13,7 +13,6 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
@@ -21,6 +20,7 @@ import com.diogorolins.battleShip.config.security.TokenService;
 import com.diogorolins.battleShip.model.Invite;
 import com.diogorolins.battleShip.model.Player;
 import com.diogorolins.battleShip.model.dto.PlayerCreateDTO;
+import com.diogorolins.battleShip.model.dto.PlayerInviteDTO;
 import com.diogorolins.battleShip.model.enums.StatusInvite;
 import com.diogorolins.battleShip.services.InviteService;
 import com.diogorolins.battleShip.services.PlayerService;
@@ -68,11 +68,11 @@ public class PlayerResource {
 	}
 	
 	@RequestMapping(method = RequestMethod.POST, value = "/invite")
-	public ResponseEntity<Invite> sendInvite(@RequestParam(value = "player") Integer playerId, HttpServletRequest request){
+	public ResponseEntity<Invite> sendInvite(@RequestBody PlayerInviteDTO playerId, HttpServletRequest request){
 		String emailPlayer = tokenService.getUsername(tokenService.getToken(request));
 		Player playerFrom = playerService.findyEmail(emailPlayer);
-		Player playerTo = playerService.findById(playerId);
-		Invite invite = inviteService.insert(new Invite(null, playerFrom, playerTo, StatusInvite.WAITING, new Date()));
+		Player playerTo = playerService.findById(playerId.getPlayerId());
+		Invite invite = inviteService.insert(new Invite(null, playerFrom, playerTo, null, StatusInvite.WAITING, new Date()));
 		URI uri = ServletUriComponentsBuilder
 				.fromCurrentRequest().path("/{id}")
 				.buildAndExpand(invite.getId()).toUri();

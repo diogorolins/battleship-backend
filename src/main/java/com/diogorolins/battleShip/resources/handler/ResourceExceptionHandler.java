@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 
 import com.diogorolins.battleShip.exception.ObjectNotFoundException;
+import com.diogorolins.battleShip.exception.ParseintExeption;
 
 @ControllerAdvice
 public class ResourceExceptionHandler {
@@ -28,6 +29,16 @@ public class ResourceExceptionHandler {
 
 	@ExceptionHandler(AuthenticationException.class)
 	public ResponseEntity<StandardError> authentionError(AuthenticationException e, HttpServletRequest request) {
+		StandardError err = new StandardError(System.currentTimeMillis(), 
+				HttpStatus.BAD_REQUEST.value(),
+				"Dados inválidos", 
+				e.getMessage(), 
+				request.getRequestURI());		
+		return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(err);
+	}
+	
+	@ExceptionHandler(ParseintExeption.class)
+	public ResponseEntity<StandardError> parseIntError(ParseintExeption e, HttpServletRequest request) {
 		StandardError err = new StandardError(System.currentTimeMillis(), 
 				HttpStatus.BAD_REQUEST.value(),
 				"Dados inválidos", 

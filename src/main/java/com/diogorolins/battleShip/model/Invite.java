@@ -28,15 +28,20 @@ public class Invite implements Serializable{
 	@JoinColumn(name = "player_to")
 	private Player to;
 	
+	@ManyToOne
+	@JoinColumn(name = "game_id")
+	private Game game;
+	
 	private StatusInvite status;
 	
 	private Date date;
 	
-	public Invite(Integer id, Player from, Player to, StatusInvite status, Date date) {
+	public Invite(Integer id, Player from, Player to, Game game, StatusInvite status, Date date) {
 		super();
 		this.id = id;
 		this.from = from;
 		this.to = to;
+		this.game = game;
 		this.status = status;
 		this.date = date;
 	}
@@ -74,6 +79,14 @@ public class Invite implements Serializable{
 	}
 	public void setDate(Date date) {
 		this.date = date;
+	}
+
+	public Game getGame() {
+		return game;
+	}
+
+	public void setGame(Game game) {
+		this.game = game;
 	}
 	
 	
