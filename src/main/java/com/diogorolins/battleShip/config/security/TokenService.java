@@ -2,6 +2,8 @@ package com.diogorolins.battleShip.config.security;
 
 import java.util.Date;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;
@@ -59,6 +61,11 @@ public class TokenService {
 			return claims.getSubject();
 		}		
 		return null;
+	}
+
+	public String getToken(HttpServletRequest request) {
+		String token = request.getHeader("Authorization");
+		return token.substring(7);
 	}
 
 }

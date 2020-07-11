@@ -33,7 +33,7 @@ public class StrikeService {
 		
 		List<ShipPosition> position = new ArrayList<>();
 		strike.setGame(gameService.findById(strike.getGame().getId()));
-		strike.setPlayer(playerService.getById(strike.getPlayer().getId()));		
+		strike.setPlayer(playerService.findById(strike.getPlayer().getId()));		
 		for(Ship ship : strike.getGame().getShips()) {
 			if(ship.getPlayer().equals(strike.getPlayer())) {
 				position = ship.getPosition().stream().filter(p -> p.getPosition().equals(strike.getPosition())).collect(Collectors.toList());

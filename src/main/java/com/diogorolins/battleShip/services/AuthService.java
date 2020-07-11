@@ -11,4 +11,5 @@ public class AuthService {
 	public UsernamePasswordAuthenticationToken convertToLogin(LoginDTO objDTO) {
 		return new UsernamePasswordAuthenticationToken(objDTO.getEmail(), objDTO.getPassword());
 	}
+	
 }

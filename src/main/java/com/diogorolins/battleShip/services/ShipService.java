@@ -31,7 +31,7 @@ public class ShipService {
 		List<Ship> ships = new ArrayList<>();
 		for(ShipInsertDTO shipDto : shipsDto) {
 			Ship ship = new Ship();
-			ship.setPlayer(playerService.getById(shipDto.getPlayer()));
+			ship.setPlayer(playerService.findById(shipDto.getPlayer()));
 			ship.setType(shipTypeService.getbyId(shipDto.getType()));
 			ship.getPosition().addAll(shipDto.getPosition());
 			ships.add(ship);

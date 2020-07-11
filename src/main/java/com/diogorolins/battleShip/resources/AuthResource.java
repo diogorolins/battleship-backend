@@ -5,6 +5,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -14,6 +15,7 @@ import com.diogorolins.battleShip.config.security.TokenService;
 import com.diogorolins.battleShip.model.dto.LoginDTO;
 import com.diogorolins.battleShip.model.dto.TokenDTO;
 import com.diogorolins.battleShip.services.AuthService;
+import com.diogorolins.battleShip.services.PlayerService;
 
 @RestController
 @RequestMapping(value = "/auth")
@@ -24,6 +26,10 @@ public class AuthResource {
 	
 	@Autowired
 	private AuthService authService;
+	
+	@Autowired
+	private PlayerService playerService;
+	
 	@Autowired
 	private AuthenticationManager authManager;
 	
@@ -32,6 +38,13 @@ public class AuthResource {
 		UsernamePasswordAuthenticationToken authentication = authService.convertToLogin(objDTO);
 		Authentication authenticationData = authManager.authenticate(authentication);
 		String token = tokenService.generateToken(authenticationData);
+		playerService.setPlayerLogged(tokenService.getUsername(token));
 		return ResponseEntity.ok().body(new TokenDTO(token, "Bearer"));
+	}
+	
+	@RequestMapping(method  = RequestMethod.PATCH, value = "/logoff/{id}")
+	public ResponseEntity<Void> logOut(@PathVariable Integer id){
+		playerService.setPlayerLogOff(id);
+		return ResponseEntity.ok().build();
 	}
 }

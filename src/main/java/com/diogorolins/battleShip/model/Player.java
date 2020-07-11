@@ -10,6 +10,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToMany;
+import javax.persistence.OneToMany;
 
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -25,7 +26,11 @@ public class Player implements UserDetails {
 	private Integer id;
 	private String name;
 	private String email;
+	
+	@JsonIgnore
 	private String password;
+	
+	private boolean loggged = false;
 	
 	@JsonIgnore
 	@ManyToMany(mappedBy = "players")
@@ -33,6 +38,10 @@ public class Player implements UserDetails {
 	
 	@ManyToMany(fetch = FetchType.EAGER, mappedBy = "players")
 	private List<Profile> profiles = new ArrayList<>();
+	
+	@JsonIgnore
+	@OneToMany
+	private List<Invite> invites = new ArrayList<>();
 	
 	public Player() {
 		
@@ -81,6 +90,24 @@ public class Player implements UserDetails {
 
 	public void setGames(List<Game> games) {
 		this.games = games;
+	}
+	
+
+	public boolean isLoggged() {
+		return loggged;
+	}
+
+	public void setLoggged(boolean loggged) {
+		this.loggged = loggged;
+	}
+	
+
+	public List<Invite> getInvites() {
+		return invites;
+	}
+
+	public void setInvites(List<Invite> invites) {
+		this.invites = invites;
 	}
 
 	@Override
