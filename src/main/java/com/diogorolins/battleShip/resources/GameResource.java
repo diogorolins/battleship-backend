@@ -1,6 +1,8 @@
 package com.diogorolins.battleShip.resources;
 
-import java.net.URI;
+import java.util.List;
+
+import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -9,12 +11,14 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
+import com.diogorolins.battleShip.config.security.TokenService;
 import com.diogorolins.battleShip.model.Game;
+import com.diogorolins.battleShip.model.Player;
 import com.diogorolins.battleShip.model.Strike;
-import com.diogorolins.battleShip.model.dto.GameCreateDTO;
+import com.diogorolins.battleShip.model.dto.ShipInsertDTO;
 import com.diogorolins.battleShip.services.GameService;
+import com.diogorolins.battleShip.services.PlayerService;
 import com.diogorolins.battleShip.services.StrikeService;
 
 @RestController
@@ -27,14 +31,22 @@ public class GameResource {
 	@Autowired 
 	private StrikeService strikeService;
 	
-	@RequestMapping(method = RequestMethod.POST)
-	public ResponseEntity<GameCreateDTO> insert(@RequestBody GameCreateDTO objDto) {
-		Game game = gameService.convertFromDto(objDto);
-		game = gameService.insert(game);
-		URI uri = ServletUriComponentsBuilder
-				.fromCurrentRequest().path("/{id}")
-				.buildAndExpand(game.getId()).toUri();
-		return ResponseEntity.created(uri).body(new GameCreateDTO(game));
+	@Autowired
+	private PlayerService playerService;
+	
+	@Autowired
+	private TokenService tokenService;
+	
+	@RequestMapping(method = RequestMethod.PUT, value = "/{id}")
+	public ResponseEntity<Game> addShips(
+			@RequestBody List<ShipInsertDTO> shipsDTO, 
+			@PathVariable Integer id,
+			HttpServletRequest request) {
+		
+		String emailPlayer = tokenService.getUsername(tokenService.getToken(request));
+		Player player = playerService.findyEmail(emailPlayer);
+		Game game = gameService.insertShips(shipsDTO, id, player.getId());
+		return ResponseEntity.ok().body(game);
 	}
 	
 	@RequestMapping(method = RequestMethod.GET, value = "/{id}")
