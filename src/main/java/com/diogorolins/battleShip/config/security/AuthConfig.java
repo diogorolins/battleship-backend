@@ -17,7 +17,7 @@ public class AuthConfig implements UserDetailsService {
 	
 	@Override
 	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-		Player user = repository.findByEmail(username);
+		Player user = repository.findByEmail(username).get();
 		if(user == null) {
 			throw new UsernameNotFoundException("Dados Inválidos");
 		} 

@@ -1,6 +1,7 @@
 package com.diogorolins.battleShip.repositories;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
@@ -11,7 +12,7 @@ import com.diogorolins.battleShip.model.Player;
 
 public interface PlayerRepository extends JpaRepository<Player, Integer>{
 
-	public Player findByEmail(String email);
+	public Optional<Player> findByEmail(String email);
 	
 	@Transactional(readOnly = true)
 	@Query("SELECT obj FROM Player obj "

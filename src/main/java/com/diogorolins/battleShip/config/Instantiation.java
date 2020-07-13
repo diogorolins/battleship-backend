@@ -37,9 +37,11 @@ public class Instantiation implements CommandLineRunner{
 		shipTyperepository.saveAll(Arrays.asList(shipType1,shipType2,shipType3,shipType4));
 		
 		Player player1 = new Player(null, "Diogo", "diogo@email.com", pe.encode("123456"), null);
-		Player player2 = new Player(null, "Bernarto", "be@email.com", pe.encode("123456"), null);
+		Player player2 = new Player(null, "Bernardo", "be@email.com", pe.encode("123456"), null);
+		Player player3 = new Player(null, "Felipe", "fe@email.com", pe.encode("123456"), null);
+		Player player4 = new Player(null, "Mariana", "ma@email.com", pe.encode("123456"), null);
 		
-		playerRepository.saveAll(Arrays.asList(player1,player2));
+		playerRepository.saveAll(Arrays.asList(player1,player2,player3,player4));
 		
 	}
 }

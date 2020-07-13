@@ -26,8 +26,12 @@ public class InviteService {
 		return repository.save(invite);
 	}
 
-	public List<Invite> searchInvite(Player player) {
-		return repository.findByPlayer(player, StatusInvite.WAITING);
+	public List<Invite> searchInviteReceived(Player player) {
+		return repository.findByPlayerReceived(player, StatusInvite.WAITING);
+	}
+	
+	public List<Invite> searchInviteSent(Player player) {
+		return repository.findByPlayerSent(player, StatusInvite.WAITING);
 	}
 	
 	public Invite findById(Integer id) {

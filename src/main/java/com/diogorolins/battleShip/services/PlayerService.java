@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import com.diogorolins.battleShip.exception.ObjectNotFoundException;
@@ -17,12 +18,15 @@ public class PlayerService {
 	
 	@Autowired
 	private PlayerRepository repository;
+	
+	@Autowired
+	private BCryptPasswordEncoder pe;
 
 	public Player convertFromDto(PlayerCreateDTO objDto) {
 		Player player = new Player();
 		player.setName(objDto.getName());
 		player.setEmail(objDto.getEmail());
-		player.setPassword(player.getPassword());
+		player.setPassword(pe.encode(objDto.getPassword()));
 		return player;
 	}
 
@@ -31,7 +35,8 @@ public class PlayerService {
 	}
 	
 	public Player findyEmail(String email) {
-		return repository.findByEmail(email);
+		Optional<Player> obj = repository.findByEmail(email);
+		return obj.orElseThrow(() -> new ObjectNotFoundException("Resource not found"));
 	}
 	
 	public Player findById(Integer id) {
@@ -45,7 +50,7 @@ public class PlayerService {
 	}
 
 	public void setPlayerLogged(String email) {
-		Player player = repository.findByEmail(email);
+		Player player = repository.findByEmail(email).get();
 		player.setLoggged(true);
 		repository.save(player);
 	}

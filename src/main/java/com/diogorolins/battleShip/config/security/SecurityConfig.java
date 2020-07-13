@@ -54,15 +54,14 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter{
 			http.headers().frameOptions().disable();
 		}
 		
+		http.cors().and().csrf().disable();
 		http.authorizeRequests()
 		.antMatchers(HttpMethod.POST,PUBLIC_MATCHERS_POST).permitAll()
 		.antMatchers(PUBLIC_MATCHERS).permitAll()
-		.anyRequest().authenticated()
-		.and().csrf().disable()
-		.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
-		
+		.anyRequest().authenticated();
 		http.addFilter(new JWTAuthenticationFilter(authenticationManager(), tokenService));
 		http.addFilter(new JWTAuthorizationFilter(authenticationManager(), tokenService, authConfig));
+		http.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
 	}
 	
 	@Override
@@ -84,7 +83,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter{
 	@Bean
 	public CorsConfigurationSource corsConfigurationSource() {
 		CorsConfiguration config = new CorsConfiguration().applyPermitDefaultValues();
-		config.setAllowedMethods(Arrays.asList("POST", "GET", "PUT", "DELETE", "OPTIONS"));
+		config.setAllowedMethods(Arrays.asList("POST", "GET", "PUT", "DELETE", "OPTIONS", "PATCH"));
 		final UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
 		source.registerCorsConfiguration("/**", config);
 		return source;

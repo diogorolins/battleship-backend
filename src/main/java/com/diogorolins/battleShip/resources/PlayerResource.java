@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
@@ -50,6 +51,12 @@ public class PlayerResource {
 		return  ResponseEntity.ok().body(player);
 	};
 	
+	@RequestMapping(method = RequestMethod.GET, value = "/email")
+	public ResponseEntity<Player> findByEmail(@RequestParam(value = "email") String email){
+		Player player = playerService.findyEmail(email);
+		return  ResponseEntity.ok().body(player);
+	};
+	
 	@RequestMapping(method = RequestMethod.POST)
 	public ResponseEntity<PlayerCreateDTO> insert(@RequestBody @Valid PlayerCreateDTO objDto){
 		Player player = playerService.convertFromDto(objDto);
@@ -79,11 +86,19 @@ public class PlayerResource {
 		return ResponseEntity.created(uri).body(invite);
 	}
 	
-	@RequestMapping(method = RequestMethod.GET, value = "/invite")
-	public ResponseEntity<List<Invite>> searchInvites(HttpServletRequest request){
+	@RequestMapping(method = RequestMethod.GET, value = "/invite/received")
+	public ResponseEntity<List<Invite>> searchInvitesReceived(HttpServletRequest request){
 		String emailPlayer = tokenService.getUsername(tokenService.getToken(request));
 		Player player = playerService.findyEmail(emailPlayer);
-		List<Invite> invites = inviteService.searchInvite(player);
+		List<Invite> invites = inviteService.searchInviteReceived(player);
+		return ResponseEntity.ok().body(invites);
+	}
+	
+	@RequestMapping(method = RequestMethod.GET, value = "/invite/sent")
+	public ResponseEntity<List<Invite>> searchInvitesSent(HttpServletRequest request){
+		String emailPlayer = tokenService.getUsername(tokenService.getToken(request));
+		Player player = playerService.findyEmail(emailPlayer);
+		List<Invite> invites = inviteService.searchInviteSent(player);
 		return ResponseEntity.ok().body(invites);
 	}
 	
