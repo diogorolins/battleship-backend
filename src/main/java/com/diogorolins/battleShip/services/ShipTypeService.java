@@ -1,5 +1,7 @@
 package com.diogorolins.battleShip.services;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -14,6 +16,10 @@ public class ShipTypeService {
 	
 	public ShipType getbyId(Integer id) {
 		return repository.findById(id).get();
+	}
+	
+	public List<ShipType> findAll() {
+		return repository.findAll();
 	}
 	
 }

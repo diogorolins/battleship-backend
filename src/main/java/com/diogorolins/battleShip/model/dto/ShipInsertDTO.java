@@ -4,7 +4,6 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.diogorolins.battleShip.model.Ship;
 import com.diogorolins.battleShip.model.ShipPosition;
 
 public class ShipInsertDTO implements Serializable{
@@ -17,12 +16,7 @@ public class ShipInsertDTO implements Serializable{
 	public ShipInsertDTO() {
 		
 	}
-	
-	public ShipInsertDTO(Ship ship) {
-		this.type = ship.getType().getId();
-		this.player = ship.getPlayer().getId();
-		this.position = ship.getPosition();
-	}
+
 
 	public Integer getType() {
 		return type;

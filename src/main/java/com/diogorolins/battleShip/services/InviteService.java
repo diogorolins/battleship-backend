@@ -31,7 +31,7 @@ public class InviteService {
 	}
 	
 	public List<Invite> searchInviteSent(Player player) {
-		return repository.findByPlayerSent(player, StatusInvite.WAITING);
+		return repository.findByPlayerSent(player);
 	}
 	
 	public Invite findById(Integer id) {

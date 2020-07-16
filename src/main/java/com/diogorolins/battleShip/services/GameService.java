@@ -29,7 +29,7 @@ public class GameService {
 	private ShipService shipService;
 	
 
-	public Game insertShips(List<ShipInsertDTO>shipsDTO, Integer id, Integer playerId) {
+	public Game insertShips(List<ShipInsertDTO> shipsDTO, Integer id, Integer playerId) {
 		Game game = findById(id);	
 		if(playerDontBelongToGame(game, playerId)){
 			throw new ObjectNotFoundException("Player não está no jogo.");
@@ -39,10 +39,11 @@ public class GameService {
 			throw new GameStartedExeption("Jogo em andamento.");
 		}
 		
-		if(haveGameReadyToStarted(game)) {
+		if(haveGameReadyToStart(game)) {
 			game.setStatus(StatusGame.STARTED);
 		}
 		game.getShips().addAll(shipService.convertFromDto(shipsDTO));
+		
 		for (Ship ship : game.getShips()) {
 			ship.setGame(game);
 			shipService.insert(ship);
@@ -58,7 +59,7 @@ public class GameService {
 		return false;
 	}
 
-	private boolean haveGameReadyToStarted(Game game) {
+	private boolean haveGameReadyToStart(Game game) {
 		if(game.getShips().size() > 0) {
 			return true;
 		}

@@ -20,7 +20,7 @@ public interface InviteRepository extends JpaRepository<Invite, Integer>{
 
 	@Transactional(readOnly = true)
 	@Query("SELECT obj FROM Invite obj "
-	+ "WHERE obj.from = :player and obj.status = :statusInvite" ) 
-	public List<Invite> findByPlayerSent(@Param("player") Player player, @Param("statusInvite") StatusInvite statusInvite);
+	+ "WHERE obj.from = :player" ) 
+	public List<Invite> findByPlayerSent(@Param("player") Player player);
 
 }

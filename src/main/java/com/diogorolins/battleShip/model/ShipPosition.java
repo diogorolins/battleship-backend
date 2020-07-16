@@ -19,7 +19,7 @@ public class ShipPosition implements Serializable{
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;
-	private String Position;
+	private String position;
 	private Hit hit = Hit.CLEAN;
 	
 	@JsonIgnore
@@ -33,7 +33,7 @@ public class ShipPosition implements Serializable{
 
 	public ShipPosition(String position, Hit hit, Ship ship) {
 		super();
-		Position = position;
+		this.position = position;
 		this.hit = hit;
 		this.ship = ship;
 	}
@@ -57,11 +57,11 @@ public class ShipPosition implements Serializable{
 	}
 
 	public String getPosition() {
-		return Position;
+		return position;
 	}
 
 	public void setPosition(String position) {
-		Position = position;
+		this.position = position;
 	}
 
 	public Hit getHit() {

@@ -1,7 +1,6 @@
 package com.diogorolins.battleShip.services;
 
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,7 +26,7 @@ public class ShipService {
 	@Autowired
 	private ShipPositionService shipPositionService;
 
-	public Collection<? extends Ship> convertFromDto(List<ShipInsertDTO> shipsDto) {
+	public List< Ship> convertFromDto(List<ShipInsertDTO> shipsDto) {
 		List<Ship> ships = new ArrayList<>();
 		for(ShipInsertDTO shipDto : shipsDto) {
 			Ship ship = new Ship();
@@ -39,6 +38,8 @@ public class ShipService {
 		return ships;
 	}
 	
+	
+
 	public void insert(Ship ship) {
 		ship = repository.save(ship);
 		for(ShipPosition position : ship.getPosition()) {
