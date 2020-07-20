@@ -9,7 +9,9 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.ManyToMany;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 
 import com.diogorolins.battleShip.model.enums.StatusGame;
@@ -27,7 +29,13 @@ public class Game implements Serializable {
 	private StatusGame status;
 	private Date date;
 	
+	@ManyToOne
+	@JoinColumn(name = "winner")
 	private Player winner;
+	
+	@ManyToOne
+	@JoinColumn(name = "turn")
+	private Player playerTurn;
 
 	@OneToMany(mappedBy = "game")
 	private List<Ship> ships = new ArrayList<>();
@@ -36,7 +44,8 @@ public class Game implements Serializable {
 
 	}
 
-	public Game(Integer id, List<Player> players, StatusGame status, Date date, Player winner, List<Ship> ships) {
+	public Game(Integer id, List<Player> players, StatusGame status, 
+			Date date, Player winner, List<Ship> ships, Player playerTurn) {
 		super();
 		this.id = id;
 		this.players = players;
@@ -44,6 +53,7 @@ public class Game implements Serializable {
 		this.date = date;
 		this.winner = winner;
 		this.ships = ships;
+		this.playerTurn = playerTurn;
 	}
 
 	public List<Player> getPlayers() {
@@ -93,6 +103,15 @@ public class Game implements Serializable {
 
 	public void setShips(List<Ship> ships) {
 		this.ships = ships;
+	}
+	
+
+	public Player getPlayerTurn() {
+		return playerTurn;
+	}
+
+	public void setPlayerTurn(Player playerTurn) {
+		this.playerTurn = playerTurn;
 	}
 
 	@Override

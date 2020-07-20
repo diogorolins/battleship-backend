@@ -65,4 +65,10 @@ public class GameResource {
 		strike = strikeService.hitStrike(strike);
 		return ResponseEntity.ok().body(strike); 
 	}
+	
+	@RequestMapping(method = RequestMethod.GET, value = "/strike/{id}")
+	public ResponseEntity<List<Strike>> strikeyGame(@PathVariable Integer id){
+		List<Strike> strikes = strikeService.getStrikesByGame(id);
+		return ResponseEntity.ok().body(strikes); 
+	}
 }

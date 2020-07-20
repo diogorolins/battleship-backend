@@ -7,6 +7,8 @@ import java.util.stream.Collectors;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.diogorolins.battleShip.model.Game;
+import com.diogorolins.battleShip.model.Player;
 import com.diogorolins.battleShip.model.Ship;
 import com.diogorolins.battleShip.model.ShipPosition;
 import com.diogorolins.battleShip.model.Strike;
@@ -32,11 +34,15 @@ public class StrikeService {
 	public Strike hitStrike(Strike strike) {
 		
 		List<ShipPosition> position = new ArrayList<>();
-		strike.setGame(gameService.findById(strike.getGame().getId()));
-		strike.setPlayer(playerService.findById(strike.getPlayer().getId()));		
-		for(Ship ship : strike.getGame().getShips()) {
+		Game game = gameService.findById(strike.getGame().getId());
+		Player player = playerService.findById(strike.getPlayer().getId());
+		strike.setGame(game);		
+		strike.setPlayer(player);	
+		gameService.setPlayerTurn(game, player);
+		
+		for(Ship ship : game.getShips()) {
 			if(ship.getPlayer().equals(strike.getPlayer())) {
-				position = ship.getPosition().stream().filter(p -> p.getPosition().equals(strike.getPosition())).collect(Collectors.toList());
+				position.addAll(ship.getPosition().stream().filter(p -> p.getPosition().equals(strike.getPosition())).collect(Collectors.toList())) ;
 			}
 		}
 		if(position.size() > 0) {
@@ -47,5 +53,10 @@ public class StrikeService {
 		
 		
 		return repository.save(strike);
+	}
+
+
+	public List<Strike> getStrikesByGame(Integer id) {
+		return repository.findByGame(gameService.findById(id));
 	}
 }
