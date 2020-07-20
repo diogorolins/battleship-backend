@@ -23,7 +23,7 @@ import com.diogorolins.battleShip.repositories.ShipRepository;
 import com.diogorolins.battleShip.repositories.ShipTypeRepository;
 
 @Configuration
-@Profile("dev")
+@Profile("prod")
 public class Instantiation implements CommandLineRunner {
 
 	@Autowired
@@ -71,7 +71,7 @@ public class Instantiation implements CommandLineRunner {
 		playerRepository.saveAll(Arrays.asList(player1, player2, player3, player4));
 
 		//game
-		
+		/*
 		Game game1 = new Game(null, Arrays.asList(player1, player2), StatusGame.STARTED, new Date(), null, null, player2);
 
 		gameRepository.save(game1);
@@ -137,7 +137,7 @@ public class Instantiation implements CommandLineRunner {
 		ship4.setGame(game1);
 		
 		shipRepository.saveAll(Arrays.asList(ship1, ship2, ship3, ship4));
-
+*/
 	
 
 	}
