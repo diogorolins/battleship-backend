@@ -61,7 +61,7 @@ public class Instantiation implements CommandLineRunner {
 
 		shipTyperepository.saveAll(
 					Arrays.asList(shipType1, shipType3, shipType5, shipType7));
-		
+		/*		
 				
 		Player player1 = new Player(null, "Diogo", "diogo@email.com", pe.encode("123456"), null);
 		Player player2 = new Player(null, "Bernardo", "be@email.com", pe.encode("123456"), null);
@@ -71,7 +71,7 @@ public class Instantiation implements CommandLineRunner {
 		playerRepository.saveAll(Arrays.asList(player1, player2, player3, player4));
 
 		//game
-/*
+
 		Game game1 = new Game(null, Arrays.asList(player1, player2), StatusGame.STARTED, new Date(), null, null, player2);
 
 		gameRepository.save(game1);
