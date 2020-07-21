@@ -1,7 +1,6 @@
 package com.diogorolins.battleShip.config;
 
 import java.util.Arrays;
-import java.util.Date;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
@@ -9,13 +8,8 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Profile;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
-import com.diogorolins.battleShip.model.Game;
 import com.diogorolins.battleShip.model.Player;
-import com.diogorolins.battleShip.model.Ship;
-import com.diogorolins.battleShip.model.ShipPosition;
 import com.diogorolins.battleShip.model.ShipType;
-import com.diogorolins.battleShip.model.enums.Hit;
-import com.diogorolins.battleShip.model.enums.StatusGame;
 import com.diogorolins.battleShip.repositories.GameRepository;
 import com.diogorolins.battleShip.repositories.PlayerRepository;
 import com.diogorolins.battleShip.repositories.ShipPositionRepository;
@@ -23,7 +17,7 @@ import com.diogorolins.battleShip.repositories.ShipRepository;
 import com.diogorolins.battleShip.repositories.ShipTypeRepository;
 
 @Configuration
-@Profile("dev")
+@Profile("prod")
 public class Instantiation implements CommandLineRunner {
 
 	@Autowired
