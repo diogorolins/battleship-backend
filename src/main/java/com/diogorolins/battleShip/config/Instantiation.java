@@ -23,7 +23,7 @@ import com.diogorolins.battleShip.repositories.ShipRepository;
 import com.diogorolins.battleShip.repositories.ShipTypeRepository;
 
 @Configuration
-@Profile("prod")
+@Profile("dev")
 public class Instantiation implements CommandLineRunner {
 
 	@Autowired
