@@ -29,6 +29,9 @@ public class GameService {
 	private ShipService shipService;
 	
 	@Autowired
+	private InviteService inviteService;
+	
+	@Autowired
 	private PlayerService playerService;
 	
 
@@ -45,6 +48,7 @@ public class GameService {
 		if(haveGameReadyToStart(game)) {
 			Player player = playerService.findById(playerId);
 			game.setPlayerTurn(player);
+			inviteService.finishInvitesWhenGameStart(game);
 			game.setStatus(StatusGame.STARTED);
 		}
 		
@@ -76,16 +80,6 @@ public class GameService {
 		List<Player> players = new ArrayList<>();
 		players.addAll(Arrays.asList(playerFrom, playerTo));
 		return repository.save(new Game(null, players, StatusGame.CREATED, new Date(), null, null, null));
-	}
-
-	public Game insert(Game game) {
-		game = repository.save(game);
-		for (Ship ship : game.getShips()) {
-			ship.setGame(game);
-			shipService.insert(ship);
-		}
-		return game;
-		
 	}
 
 	public Game findById(Integer id) {

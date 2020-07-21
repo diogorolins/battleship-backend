@@ -1,7 +1,7 @@
 package com.diogorolins.battleShip.model.enums;
 
 public enum StatusInvite {
-	WAITING(1), ACCEPTED(2), DECLINED(3);
+	WAITING(1), ACCEPTED(2), DECLINED(3), DONE(4);
 
 	private final int status;
 

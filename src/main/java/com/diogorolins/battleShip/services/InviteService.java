@@ -31,7 +31,7 @@ public class InviteService {
 	}
 	
 	public List<Invite> searchInviteSent(Player player) {
-		return repository.findByPlayerSent(player);
+		return repository.findByPlayerSent(player, StatusInvite.DONE);
 	}
 	
 	public Invite findById(Integer id) {
@@ -53,6 +53,13 @@ public class InviteService {
 		invite.setGame(game);
 		repository.save(invite);
 		return invite;
+	}
+	
+	public void finishInvitesWhenGameStart(Game game) {
+		List<Invite> invites = repository.findByGame(game);
+		for (Invite invite : invites) {
+			invite.setStatus(StatusInvite.DONE);
+		}		
 	}
 	
 }
