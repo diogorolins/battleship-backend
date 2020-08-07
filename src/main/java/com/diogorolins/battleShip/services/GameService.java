@@ -35,7 +35,7 @@ public class GameService {
 	private PlayerService playerService;
 	
 
-	public Game insertShips(List<ShipInsertDTO> shipsDTO, Integer id, Integer playerId) {
+	public Game insertShipsToStartGame(List<ShipInsertDTO> shipsDTO, Integer id, Integer playerId) {
 		Game game = findById(id);	
 		if(playerDontBelongToGame(game, playerId)){
 			throw new ObjectNotFoundException("Player não está no jogo.");

@@ -45,7 +45,7 @@ public class GameResource {
 		
 		String emailPlayer = tokenService.getUsername(tokenService.getToken(request));
 		Player player = playerService.findyEmail(emailPlayer);
-		Game game = gameService.insertShips(shipsDTO, id, player.getId());
+		Game game = gameService.insertShipsToStartGame(shipsDTO, id, player.getId());
 		return ResponseEntity.ok().body(game);
 	}
 	

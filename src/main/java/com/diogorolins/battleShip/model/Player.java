@@ -43,17 +43,20 @@ public class Player implements UserDetails {
 	@OneToMany
 	private List<Invite> invites = new ArrayList<>();
 	
+	private Boolean isAdm = false;
+	
 	public Player() {
 		
 	}
 
-	public Player(Integer id, String name, String email, String password, List<Game> games) {
+	public Player(Integer id, String name, String email, String password, List<Game> games, Boolean isAdm) {
 		super();
 		this.id = id;
 		this.name = name;
 		this.email = email;
 		this.password = password;
 		this.games = games;
+		this.isAdm = isAdm;
 	}
 
 	public Integer getId() {
@@ -108,6 +111,15 @@ public class Player implements UserDetails {
 
 	public void setInvites(List<Invite> invites) {
 		this.invites = invites;
+	}
+	
+
+	public Boolean getIsAdm() {
+		return isAdm;
+	}
+
+	public void setIsAdm(Boolean isAdm) {
+		this.isAdm = isAdm;
 	}
 
 	@Override
